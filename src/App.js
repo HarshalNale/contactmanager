@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/layout/Header";
+import Contacts from "./components/contacts/Contacts";
+import Provider from "./Context";
+import AddContact from "./components/contacts/AddContact";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <Provider>
+        <Header branding="Contact manager" />
+        <AddContact />
+        <Contacts />
+      </Provider>
+    );
+  }
 }
 
 export default App;
