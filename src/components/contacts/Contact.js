@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Consumer } from "../../Context";
+import request from "superagent";
+import { Link } from "react-router-dom";
 
 class Contact extends Component {
   state = {
     showContactInfo: false,
   };
 
-  onDeleteClick = (id, dispatch) => {
-    console.log(dispatch);
+  onDeleteClick = async (id, dispatch) => {
+    await request.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
     dispatch({
       type: "DELETE_CONTACT",
       payload: id,
@@ -41,7 +43,11 @@ class Contact extends Component {
                   />
                   <i
                     className="fas fa-times"
-                    style={{ cursor: "pointer", color: "red", float: "right" }}
+                    style={{
+                      cursor: "pointer",
+                      color: "red",
+                      float:'right'
+                    }}
                     onClick={this.onDeleteClick.bind(this, id, dispatch)}
                   />
                 </h4>

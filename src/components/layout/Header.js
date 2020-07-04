@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const Header = (props) => {
-  const { branding } = props;
+const Header = () => {
   return (
     <>
       <nav className="mb-1 navbar navbar-expand-lg navbar-dark primary-color">
-        <a className="navbar-brand" href="#">
-          Navbar
-        </a>
+        <span className="navbar-brand" href="#">
+          <Link to="/" className="nav-link" style={{ color: "white" }}>
+            Contact Manager
+          </Link>
+        </span>
         <button
           className="navbar-toggler"
           type="button"
@@ -24,84 +26,30 @@ const Header = (props) => {
           className="collapse navbar-collapse"
           id="navbarSupportedContent-333"
         >
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">
-                Home
-                <span className="sr-only">(current)</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Features
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Pricing
-              </a>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                id="navbarDropdownMenuLink-333"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <div
-                className="dropdown-menu dropdown-default"
-                aria-labelledby="navbarDropdownMenuLink-333"
-              >
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </div>
-            </li>
-          </ul>
           <ul className="navbar-nav ml-auto nav-flex-icons">
             <li className="nav-item">
-              <a className="nav-link waves-effect waves-light">
-                <i className="fab fa-twitter"></i>
-              </a>
+              <span className="nav-link waves-effect waves-light">
+                <Link to="/" className="nav-link">
+                  <i className="fas fa-home"></i>
+                  Home
+                </Link>
+              </span>
+            </li>
+
+            <li className="nav-item">
+              <span className="nav-link waves-effect waves-light">
+                <Link to="/addcontact" className="nav-link">
+                  <i className="fas fa-user-plus"></i>
+                  Add
+                </Link>
+              </span>
             </li>
             <li className="nav-item">
-              <a className="nav-link waves-effect waves-light">
-                <i className="fab fa-google-plus-g"></i>
-              </a>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                id="navbarDropdownMenuLink-333"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i className="fas fa-user"></i>
-              </a>
-              <div
-                className="dropdown-menu dropdown-menu-right dropdown-default"
-                aria-labelledby="navbarDropdownMenuLink-333"
-              >
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </div>
+              <span className="nav-link waves-effect waves-light">
+                <Link to="/about" className="nav-link">
+                  About Us
+                </Link>
+              </span>
             </li>
           </ul>
         </div>
@@ -116,10 +64,6 @@ Header.defaultProps = {
 
 Header.propTypes = {
   branding: PropTypes.string.isRequired,
-};
-
-const anchoTagColor = {
-  color: "white",
 };
 
 export default Header;
