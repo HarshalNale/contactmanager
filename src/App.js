@@ -1,17 +1,18 @@
 import React from "react";
 import Header from "./components/layout/Header";
 import Contacts from "./components/contacts/Contacts";
-import Provider from "./Context";
 import AddContact from "./components/contacts/AddContact";
 
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import AboutUs from "./components/pages/AboutUs";
 import PageNotFound from "./components/pages/PageNotFound";
+import { Provider } from "react-redux";
+import Store from "./components/store/Store";
 
 class App extends React.Component {
   render() {
     return (
-      <Provider>
+      <Provider store={Store}>
         <Router>
           <Header branding="Contact manager" />
           <Switch>
