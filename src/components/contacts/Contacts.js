@@ -1,25 +1,14 @@
 import React, { Component } from "react";
 import Contact from "./Contact";
 import { connect } from "react-redux";
-import { GET_CONTACTS } from "../actions/types";
 import PropTypes from "prop-types";
+import { getContacts } from "../actions/ContactActions";
 
 class Contacts extends Component {
-  state = {
-    contacts: [
-      {
-        id: 1,
-        name: "a",
-        email: "a@gmail.com",
-        phone: "111222333",
-      },
-      { id: 2, name: "b", email: "b@gmail.com", phone: "444555666" },
-      { id: 3, name: "c", email: "c@gmail.com", phone: "777888999" },
-    ],
-  };
+  state = {};
 
   componentDidMount() {
-    this.props.getContacts();
+    if (this.props.contacts.length === 0) this.props.getContacts();
   }
 
   render() {
@@ -39,8 +28,10 @@ const mapStateToProps = (state) => ({
   contacts: state.contactReducer.contacts,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getContacts: () => dispatch({ type: GET_CONTACTS }),
-});
+// const mapDispatchToProps = () => ({
+//   getContacts: () => dispatch({ type: GET_CONTACTS }),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+export default connect(mapStateToProps, {
+  getContacts,
+})(Contacts);

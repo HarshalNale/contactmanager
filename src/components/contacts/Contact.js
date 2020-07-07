@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import request from "superagent";
 import { Link } from "react-router-dom";
-
+import { connect } from "react-redux";
+import { deleteContact } from "../actions/ContactActions";
 class Contact extends Component {
   state = {
     showContactInfo: false,
   };
 
-  onDeleteClick = async (id) => {
-    await request.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+  onDeleteClick = (id) => {
+    this.props.deleteContact(id);
   };
 
   render() {
@@ -32,15 +32,22 @@ class Contact extends Component {
               }
               style={{ cursor: "pointer" }}
             />
-            <i
-              className="fas fa-times"
-              style={{
-                cursor: "pointer",
-                color: "red",
-                float: "right",
-              }}
-              onClick={this.onDeleteClick.bind(this, id)}
-            />
+            <span style={{ float: "right" }}>
+              <Link to={`/edit/contact/${id}`}>
+                <i
+                  className="fas fa-pencil-alt "
+                  style={{ marginRight: "15px" }}
+                />
+              </Link>
+              <i
+                className="fas fa-times"
+                style={{
+                  cursor: "pointer",
+                  color: "red",
+                }}
+                onClick={this.onDeleteClick.bind(this, id)}
+              />
+            </span>
           </h4>
           {showContactInfo ? (
             <ul className="list-group">
@@ -54,4 +61,12 @@ class Contact extends Component {
   }
 }
 
-export default Contact;
+Contact.propTypes = {
+  contact: PropTypes.object.isRequired,
+};
+
+// const mapStateToProps = (state) => ({});
+
+// const mapDispatchToprops = (dispatch) => ({});
+
+export default connect(null, { deleteContact })(Contact);

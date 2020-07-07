@@ -8,6 +8,7 @@ import AboutUs from "./components/pages/AboutUs";
 import PageNotFound from "./components/pages/PageNotFound";
 import { Provider } from "react-redux";
 import Store from "./components/store/Store";
+import EditContact from "./components/contacts/EditContact";
 
 class App extends React.Component {
   render() {
@@ -18,6 +19,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Contacts} />
             <Route exact path="/addcontact" component={AddContact} />
+            <Route exact path="/edit/contact/:id" component={EditContact} />
             <Route exact path="/about" component={AboutUs} />
             <Route path="*" component={PageNotFound} />
           </Switch>

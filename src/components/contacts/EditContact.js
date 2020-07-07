@@ -1,25 +1,36 @@
 import React, { Component } from "react";
 import TextInputgroup from "../layout/TextInputGroup";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
-import { addContact } from "../actions/ContactActions";
+import { getContact, updateContact } from "../actions/ContactActions";
 
-class AddContact extends Component {
+class EditContact extends Component {
   state = {
+    id: "",
     name: "",
     email: "",
     phone: "",
     errors: {},
   };
 
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.getContact(parseInt(id));
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    if (nextProps.contact) {
+      const { id, name, phone, email } = nextProps.contact;
+      this.setState({ id, name, phone, email });
+    }
+  }
+
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = (e) => {
+  onUpdateContact = (e) => {
     e.preventDefault();
-    const { name, email, phone } = this.state;
+    const { id, name, email, phone } = this.state;
     //check for errors
     if (name === "") {
       this.setState({ errors: { name: "Name is required" } });
@@ -35,13 +46,12 @@ class AddContact extends Component {
     }
 
     const newContact = {
-      id: uuidv4(),
+      id,
       name,
       email,
       phone,
     };
-
-    this.props.addContact(newContact);
+    this.props.updateContact(newContact);
 
     this.setState({ name: "", email: "", phone: "", errors: {} });
     this.props.history.push("/");
@@ -58,24 +68,22 @@ class AddContact extends Component {
           className="card-header info-color white-text text-center py-4"
           style={{ marginTop: "5%" }}
         >
-          <strong>Add New Contact </strong>
+          <strong>Edit Contact </strong>
         </h5>
 
         <div className="card-body px-lg-5 pt-0">
           <form
             className="text-center"
             style={{ color: "#757575" }}
-            onSubmit={this.onSubmit.bind(this)}
+            onSubmit={this.onUpdateContact.bind(this)}
           >
             <TextInputgroup
-              label="Name"
               name="name"
               value={name}
               onChange={this.onChange}
               error={errors.name}
             />
             <TextInputgroup
-              label="Email"
               name="email"
               type="email"
               value={email}
@@ -83,7 +91,6 @@ class AddContact extends Component {
               error={errors.email}
             />
             <TextInputgroup
-              label="Phone"
               name="phone"
               value={phone}
               onChange={this.onChange}
@@ -94,7 +101,7 @@ class AddContact extends Component {
               className="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect"
               type="submit"
             >
-              Add Contact
+              Update Contact
             </button>
           </form>
         </div>
@@ -103,8 +110,10 @@ class AddContact extends Component {
   }
 }
 
-AddContact.propTypes = {
-  addContact: PropTypes.func.isRequired,
-};
-
-export default connect(null, { addContact })(AddContact);
+const mapStateToProps = (state) => ({
+  contact: state.contactReducer.contact,
+});
+export default connect(mapStateToProps, {
+  getContact,
+  updateContact,
+})(EditContact);
